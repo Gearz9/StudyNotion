@@ -1,47 +1,45 @@
-import React from "react";
+import React, { useEffect, useState } from "react"
+// Import Swiper React components
+import { Swiper, SwiperSlide } from "swiper/react"
 
-import { Swiper, SwiperSlide } from "swiper/react";
-import "swiper/css";
-import "swiper/css/free-mode";
-import "swiper/css/pagination";
-// import  Autoplay  from "swiper";
-// import  FreeMode  from "swiper";
-// import  Navigation  from "swiper";
-// import  Pagination  from "swiper";
+// Import Swiper styles
+import "swiper/css"
+import "swiper/css/free-mode"
+import "swiper/css/pagination"
+// import "../../.."
+// Import required modules
+import { FreeMode, Pagination } from "swiper"
 
-import CatalogCourseCard from "./CatalogCourseCard";
+// import { getAllCourses } from "../../services/operations/courseDetailsAPI"
+import CatalogCourseCard from "./CatalogCourseCard"
 
-const CourseSlider = ({ Courses }) => {
+function CourseSlider({ Courses }) {
   return (
     <>
       {Courses?.length ? (
         <Swiper
           slidesPerView={1}
+          spaceBetween={25}
           loop={true}
-          spaceBetween={200}
-          pagination={true}
-          // modules={[Autoplay, Pagination, Navigation]}
-          className="mySwiper"
-          autoplay={{
-            delay: 1000,
-            disableOnInteraction: false,
-          }}
-          navigation={true}
+          modules={[FreeMode, Pagination]}
           breakpoints={{
-            1024: { slidesPerView: 3 },
+            1024: {
+              slidesPerView: 3,
+            },
           }}
+          className="max-h-[30rem]"
         >
-          {Courses?.map((course, index) => (
-            <SwiperSlide key={index}>
+          {Courses?.map((course, i) => (
+            <SwiperSlide key={i}>
               <CatalogCourseCard course={course} Height={"h-[250px]"} />
             </SwiperSlide>
           ))}
         </Swiper>
       ) : (
-        <p>No Course Found</p>
+        <p className="text-xl text-richblack-5">No Course Found</p>
       )}
     </>
-  );
-};
+  )
+}
 
-export default CourseSlider;
+export default CourseSlider
