@@ -11,20 +11,20 @@ const RequirementsField = ({
   errors,
 }) => {
   const [requirement, setRequirement] = useState("");
-  const [requirementList, setRequirementList] = useState([]);
+  const [requirementsList, setrequirementsList] = useState([]);
 
   const handleAddRequirement = () => {
     if (requirement) {
-      setRequirementList([...requirementList, requirement]);
+      setrequirementsList([...requirementsList, requirement]);
       setRequirement("");
     }
   };
 
   const handleRemoveRequirement = (index) => {
-    const updateRequirementList = [...requirementList];
+    const updaterequirementsList = [...requirementsList];
     // remove entry from the list using splice
-    updateRequirementList.splice(index, 1);
-    setRequirementList(updateRequirementList);
+    updaterequirementsList.splice(index, 1);
+    setrequirementsList(updaterequirementsList);
   };
 
   //   we must register in our first render
@@ -32,54 +32,53 @@ const RequirementsField = ({
     register(name, { require: true, validate: (value) => value.length > 0 });
   }, []);
 
-  //   whenever requirementList gets Updated we need to setValue of the register
+  //   whenever requirementsList gets Updated we need to setValue of the register
   useEffect(() => {
-    setValue(name, requirementList);
-  }, [requirementList]);
+    setValue(name, requirementsList);
+  }, [requirementsList]);
 
   return (
-    <div>
-      <label className="text-richblack-5" htmlFor={name}>
-        {" "}
-        {label} <sup>*</sup>{" "}
+    <div className="flex flex-col space-y-2">
+      <label className="text-sm text-richblack-5" htmlFor={name}>
+        {label} <sup className="text-pink-200">*</sup>
       </label>
-      <div>
+      <div className="flex flex-col items-start space-y-2">
         <input
           type="text"
           id={name}
           value={requirement}
           onChange={(e) => setRequirement(e.target.value)}
-          className="w-full"
+          className="form-style w-full"
         />
         <button
           type="button"
           onClick={handleAddRequirement}
           className="font-semibold text-yellow-50"
         >
-          ADD
+          Add
         </button>
       </div>
-
-      {requirementList.length > 0 && (
-        <ul>
-          {requirementList.map((requirement, index) => {
-            return (
-              <li key={index} className="flex items-center text-richblack-5">
-                <span> {requirement} </span>
-                <button
-                  type="button"
-                  onClick={() => handleRemoveRequirement(index)}
-                  className="text-xs text-pure-greys-300"
-                >
-                  clear
-                </button>
-              </li>
-            );
-          })}
+      {requirementsList.length > 0 && (
+        <ul className="mt-2 list-inside list-disc">
+          {requirementsList.map((requirement, index) => (
+            <li key={index} className="flex items-center text-richblack-5">
+              <span>{requirement}</span>
+              <button
+                type="button"
+                className="ml-2 text-xs text-pure-greys-300 "
+                onClick={() => handleRemoveRequirement(index)}
+              >
+                clear
+              </button>
+            </li>
+          ))}
         </ul>
       )}
-
-      {errors[name] && <span> {label} is required </span>}
+      {errors[name] && (
+        <span className="ml-2 text-xs tracking-wide text-pink-200">
+          {label} is required
+        </span>
+      )}
     </div>
   );
 };

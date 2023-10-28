@@ -28,7 +28,7 @@ function loadScript(src) {
   });
 }
 
-export async function buyCourse(
+export async function BuyCourse(
   token,
   courses,
   userDetails,

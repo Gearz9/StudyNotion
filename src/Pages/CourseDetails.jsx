@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import { buyCourse } from "../services/operations/studentFeaturesAPI";
+import { BuyCourse } from "../services/operations/studentFeaturesAPI";
 import { fetchCourseDetails } from "../services/operations/courseDetailsAPI";
 import GetAvgRating from "../utils/avgRating";
 import { Error } from "./Error";
@@ -83,7 +83,7 @@ const CourseDetials = () => {
 
   const handleBuyCourse = () => {
     if (token) {
-      buyCourse(token, [courseId], user, navigate, dispatch);
+      BuyCourse(token, [courseId], user, navigate, dispatch);
       return;
     }
 

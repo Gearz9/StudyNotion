@@ -38,9 +38,18 @@ export default function EditCourse() {
   }
   return (
     <div>
-      <h1>Edit Course</h1>
-
-      <div>{course ? <RenderSteps /> : <p>Course Not Found</p>}</div>
+    <h1 className="mb-14 text-3xl font-medium text-richblack-5">
+      Edit Course
+    </h1>
+    <div className="mx-auto max-w-[600px]">
+      {course ? (
+        <RenderSteps />
+      ) : (
+        <p className="mt-14 text-center text-3xl font-semibold text-richblack-100">
+          Course not found
+        </p>
+      )}
     </div>
+  </div>
   );
 }
