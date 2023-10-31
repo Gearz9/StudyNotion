@@ -17,12 +17,20 @@ exports.createCourse = async (req, res) => {
       whatYouWillLearn,
       price,
       category,
-      tag,
+      tag: _tag,
       status,
+      instructions: _instructions,
     } = req.body;
 
     // get thumbnail
     const thumbnail = req.files.thumbnailImage;
+
+    // Convert the tag and instructions from stringified Array to Array
+    const tag = JSON.parse(_tag);
+    const instructions = JSON.parse(_instructions);
+
+    console.log("tag", tag);
+    console.log("instructions", instructions);
 
     // validation
     if (
@@ -32,7 +40,8 @@ exports.createCourse = async (req, res) => {
       !price ||
       !category ||
       !thumbnail ||
-      !tag
+      !tag.length ||
+      !instructions.length
     ) {
       let message;
       if (!courseName) message = "CourseName not found";
@@ -44,7 +53,8 @@ exports.createCourse = async (req, res) => {
       if (!category) message = "category not found";
 
       if (!thumbnail) message = "thumbnail not found";
-      if (!tag) message = "tag not found";
+      if (!tag.length) message = "tag not found";
+      if (!instructions.length) message = "tag not found";
 
       return res.status(400).json({
         success: false,
@@ -96,6 +106,7 @@ exports.createCourse = async (req, res) => {
       thumbnail: thumbnail_Image.secure_url,
       tag: tag,
       status: status,
+      instructions,
     });
 
     // add the new course to the user schema of instructor
